@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tajaddin Gafarov - ML Engineer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #0d1117; --surface: #161b22; --border: #21262d;
+      --accent: #58a6ff; --accent2: #3fb950; --text: #e6edf3;
+      --muted: #8b949e; --badge-bg: #1f2937;
+    }
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--text); font-family: 'Inter', system-ui, sans-serif; font-size: 16px; line-height: 1.7; min-height: 100vh; }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .container { max-width: 760px; margin: 0 auto; padding: 0 24px; }
+    nav { border-bottom: 1px solid var(--border); padding: 16px 0; position: sticky; top: 0; background: rgba(13,17,23,0.92); backdrop-filter: blur(8px); z-index: 100; }
+    nav .container { display: flex; align-items: center; justify-content: space-between; }
+    .nav-brand { font-family: 'JetBrains Mono', monospace; font-size: 14px; color: var(--accent2); letter-spacing: 0.02em; }
+    .nav-links { display: flex; gap: 24px; list-style: none; }
+    .nav-links a { font-size: 14px; color: var(--muted); transition: color 0.15s; }
+    .nav-links a:hover { color: var(--text); text-decoration: none; }
+    .hero { padding: 80px 0 64px; border-bottom: 1px solid var(--border); }
+    .hero-label { font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--accent2); margin-bottom: 16px; letter-spacing: 0.05em; }
+    .hero h1 { font-size: clamp(2rem, 5vw, 3rem); font-weight: 600; line-height: 1.2; margin-bottom: 12px; letter-spacing: -0.02em; }
+    .hero-tagline { font-size: 1.1rem; color: var(--muted); margin-bottom: 32px; max-width: 540px; }
+    .hero-tagline span { color: var(--accent); }
+    .hero-cta { display: flex; gap: 12px; flex-wrap: wrap; }
+    .btn { display: inline-flex; align-items: center; gap: 6px; padding: 9px 18px; border-radius: 6px; font-size: 14px; font-weight: 500; transition: opacity 0.15s, transform 0.15s; cursor: pointer; }
+    .btn:hover { opacity: 0.85; text-decoration: none; transform: translateY(-1px); }
+    .btn-primary { background: var(--accent); color: #0d1117; }
+    .btn-outline { border: 1px solid var(--border); color: var(--text); background: transparent; }
+    .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+    section { padding: 64px 0; border-bottom: 1px solid var(--border); }
+    section:last-of-type { border-bottom: none; }
+    .section-label { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--accent); text-transform: uppercase; letter-spacing: 0.12em; margin-bottom: 8px; }
+    h2 { font-size: 1.5rem; font-weight: 600; margin-bottom: 24px; letter-spacing: -0.01em; }
+    .about-text { color: var(--muted); font-size: 1rem; max-width: 640px; }
+    .about-text p + p { margin-top: 12px; }
+    .about-text strong { color: var(--text); font-weight: 500; }
+    .skills-grid { display: flex; flex-wrap: wrap; gap: 8px; }
+    .badge { display: inline-block; padding: 4px 12px; border-radius: 20px; font-size: 13px; font-family: 'JetBrains Mono', monospace; background: var(--badge-bg); border: 1px solid var(--border); color: var(--muted); transition: border-color 0.15s, color 0.15s; }
+    .badge:hover { border-color: var(--accent); color: var(--text); }
+    .projects-grid { display: grid; gap: 16px; }
+    .card { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 24px; transition: border-color 0.2s, transform 0.2s; }
+    .card:hover { border-color: var(--accent); transform: translateY(-2px); }
+    .card-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; margin-bottom: 10px; }
+    .card-title { font-family: 'JetBrains Mono', monospace; font-size: 15px; font-weight: 500; color: var(--accent); }
+    .card-link { font-size: 13px; color: var(--muted); white-space: nowrap; flex-shrink: 0; transition: color 0.15s; }
+    .card-link:hover { color: var(--accent); text-decoration: none; }
+    .card-desc { color: var(--muted); font-size: 14px; margin-bottom: 14px; line-height: 1.6; }
+    .card-desc strong { color: var(--text); font-weight: 500; }
+    .card-stack { display: flex; flex-wrap: wrap; gap: 6px; }
+    .tag { font-size: 11px; font-family: 'JetBrains Mono', monospace; padding: 2px 8px; border-radius: 4px; background: var(--bg); border: 1px solid var(--border); color: var(--muted); }
+    .contact-links { display: flex; flex-direction: column; gap: 12px; }
+    .contact-item { display: flex; align-items: center; gap: 12px; font-size: 15px; }
+    .contact-label { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--muted); width: 72px; flex-shrink: 0; }
+    footer { padding: 24px 0; text-align: center; font-size: 13px; color: var(--muted); border-top: 1px solid var(--border); font-family: 'JetBrains Mono', monospace; }
+    @media (max-width: 560px) {
+      nav .container { flex-direction: column; gap: 10px; align-items: flex-start; }
+      .nav-links { gap: 16px; }
+      .hero { padding: 48px 0 40px; }
+      .hero h1 { font-size: 1.8rem; }
+      section { padding: 48px 0; }
+      .card-header { flex-direction: column; gap: 4px; }
+    }
+  </style>
+</head>
+<body>
+<nav>
+  <div class="container">
+    <span class="nav-brand">tajaddin.gafarov</span>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </div>
+</nav>x
+<div class="container">
+  <header class="hero">
+    <p class="hero-label">// ML Engineer</p>
+    <h1>Tajaddin Gafarov</h1>
+    <p class="hero-tagline">I build <span>LLM agents</span>, RAG pipelines, and production ML systems.<br>Based in Tampa, FL. Open to remote.</p>
+    <div class="hero-cta">
+      <a href="https://github.com/Tajaddin" class="btn btn-primary" target="_blank" rel="noopener">GitHub Profile</a>
+      <a href="#contact" class="btn btn-outline">Get in touch</a>
+    </div>
+  </header>
+  <section id="about">
+    <p class="section-label">01 / about</p>
+    <h2>About Me</h2>
+    <div class="about-text">
+      <p>I am an ML engineer focused on <strong>LLM agents and agentic AI systems</strong>. I design and ship RAG pipelines, multi-agent workflows built with LangGraph, and inference APIs that run at production scale.</p>
+      <p>Previously I ran experiments on a <strong>4-GPU cluster</strong> comparing knowledge-editing methods in large language models, tracking results with MLflow across 48 hours of continuous runs. I am authorized to work in the US and do not require sponsorship.</p>
+    </div>
+  </section>
+  <section id="skills">
+    <p class="section-label">02 / skills</p>
+    <h2>Tech Stack</h2>
+    <div class="skills-grid">
+      <span class="badge">Python</span><span class="badge">LangChain</span><span class="badge">LangGraph</span><span class="badge">RAG</span><span class="badge">pgvector</span><span class="badge">MLflow</span><span class="badge">FastAPI</span><span class="badge">PyTorch</span><span class="badge">HuggingFace</span><span class="badge">AWS</span><span class="badge">Docker</span><span class="badge">Kubernetes</span><span class="badge">PostgreSQL</span><span class="badge">Node.js</span><span class="badge">TypeScript</span><span class="badge">CUDA / C++</span>
+    </div>
+  </section>
+  <section id="projects">
+    <p class="section-label">03 / projects</p>
+    <h2>Projects</h2>
+    <div class="projects-grid">
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">llm-knowledge-editing</span>
+          <a href="https://github.com/Tajaddin/llm-knowledge-editing" class="card-link" target="_blank" rel="noopener">&#8599; GitHub</a>
+        </div>
+        <p class="card-desc">LLM evaluation platform for knowledge-editing methods. Builds RAG ingestion pipelines with <strong>pgvector retrieval</strong> and tracks experiments with MLflow across three methods: ROME, LTE-LoRA, and ICE. All runs executed on a <strong>4-GPU cluster over 48 hours</strong>.</p>
+        <div class="card-stack"><span class="tag">Python</span><span class="tag">HuggingFace</span><span class="tag">LLaMA2</span><span class="tag">LangChain</span><span class="tag">MLflow</span><span class="tag">pgvector</span></div>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">dota2-build-generator</span>
+          <a href="https://github.com/Tajaddin/dota2-build-generator" class="card-link" target="_blank" rel="noopener">&#8599; GitHub</a>
+        </div>
+        <p class="card-desc">Embedding-based recommender trained on <strong>50K+ matches</strong>. Deployed as a production inference API with a TypeScript + Node.js backend, Docker packaging, and a full CI/CD pipeline.</p>
+        <div class="card-stack"><span class="tag">Python</span><span class="tag">PyTorch</span><span class="tag">TypeScript</span><span class="tag">Node.js</span><span class="tag">Docker</span><span class="tag">CI/CD</span></div>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">cuda-inlj</span>
+          <a href="https://github.com/Tajaddin/cuda-inlj" class="card-link" target="_blank" rel="noopener">&#8599; GitHub</a>
+        </div>
+        <p class="card-desc">GPU-accelerated B+ Tree index nested-loop join. Achieves a <strong>4.2x speedup</strong> over the CPU baseline on 10M-row datasets, benchmarked within 5% of theoretical memory-bandwidth bounds.</p>
+        <div class="card-stack"><span class="tag">CUDA</span><span class="tag">C++</span><span class="tag">GPU</span></div>
+      </div>
+    </div>
+  </section>
+  <section id="contact">
+    <p class="section-label">04 / contact</p>
+    <h2>Get in Touch</h2>
+    <div class="contact-links">
+      <div class="contact-item"><span class="contact-label">email</span><a href="mailto:gafarovtajaddin@gmail.com">gafarovtajaddin@gmail.com</a></div>
+      <div class="contact-item"><span class="contact-label">linkedin</span><a href="https://www.linkedin.com/in/tajaddin-gafarov" target="_blank" rel="noopener">linkedin.com/in/tajaddin-gafarov</a></div>
+      <div class="contact-item"><span class="contact-label">github</span><a href="https://github.com/Tajaddin" target="_blank" rel="noopener">github.com/Tajaddin</a></div>
+      <div class="contact-item"><span class="contact-label">location</span><span style="color: var(--muted);">Tampa, FL &mdash; open to remote</span></div>
+    </div>
+  </section>
+</div>
+<footer>
+  <div class="container">&copy; 2025 Tajaddin Gafarov &mdash; built with plain HTML &amp; CSS</div>
+</footer>
+</body>
+</html>
