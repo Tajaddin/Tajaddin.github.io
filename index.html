@@ -1,155 +1,251 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Tajaddin Gafarov - ML Engineer</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    :root {
-      --bg: #0d1117; --surface: #161b22; --border: #21262d;
-      --accent: #58a6ff; --accent2: #3fb950; --text: #e6edf3;
-      --muted: #8b949e; --badge-bg: #1f2937;
-    }
-    html { scroll-behavior: smooth; }
-    body { background: var(--bg); color: var(--text); font-family: 'Inter', system-ui, sans-serif; font-size: 16px; line-height: 1.7; min-height: 100vh; }
-    a { color: var(--accent); text-decoration: none; }
-    a:hover { text-decoration: underline; }
-    .container { max-width: 760px; margin: 0 auto; padding: 0 24px; }
-    nav { border-bottom: 1px solid var(--border); padding: 16px 0; position: sticky; top: 0; background: rgba(13,17,23,0.92); backdrop-filter: blur(8px); z-index: 100; }
-    nav .container { display: flex; align-items: center; justify-content: space-between; }
-    .nav-brand { font-family: 'JetBrains Mono', monospace; font-size: 14px; color: var(--accent2); letter-spacing: 0.02em; }
-    .nav-links { display: flex; gap: 24px; list-style: none; }
-    .nav-links a { font-size: 14px; color: var(--muted); transition: color 0.15s; }
-    .nav-links a:hover { color: var(--text); text-decoration: none; }
-    .hero { padding: 80px 0 64px; border-bottom: 1px solid var(--border); }
-    .hero-label { font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--accent2); margin-bottom: 16px; letter-spacing: 0.05em; }
-    .hero h1 { font-size: clamp(2rem, 5vw, 3rem); font-weight: 600; line-height: 1.2; margin-bottom: 12px; letter-spacing: -0.02em; }
-    .hero-tagline { font-size: 1.1rem; color: var(--muted); margin-bottom: 32px; max-width: 540px; }
-    .hero-tagline span { color: var(--accent); }
-    .hero-cta { display: flex; gap: 12px; flex-wrap: wrap; }
-    .btn { display: inline-flex; align-items: center; gap: 6px; padding: 9px 18px; border-radius: 6px; font-size: 14px; font-weight: 500; transition: opacity 0.15s, transform 0.15s; cursor: pointer; }
-    .btn:hover { opacity: 0.85; text-decoration: none; transform: translateY(-1px); }
-    .btn-primary { background: var(--accent); color: #0d1117; }
-    .btn-outline { border: 1px solid var(--border); color: var(--text); background: transparent; }
-    .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
-    section { padding: 64px 0; border-bottom: 1px solid var(--border); }
-    section:last-of-type { border-bottom: none; }
-    .section-label { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--accent); text-transform: uppercase; letter-spacing: 0.12em; margin-bottom: 8px; }
-    h2 { font-size: 1.5rem; font-weight: 600; margin-bottom: 24px; letter-spacing: -0.01em; }
-    .about-text { color: var(--muted); font-size: 1rem; max-width: 640px; }
-    .about-text p + p { margin-top: 12px; }
-    .about-text strong { color: var(--text); font-weight: 500; }
-    .skills-grid { display: flex; flex-wrap: wrap; gap: 8px; }
-    .badge { display: inline-block; padding: 4px 12px; border-radius: 20px; font-size: 13px; font-family: 'JetBrains Mono', monospace; background: var(--badge-bg); border: 1px solid var(--border); color: var(--muted); transition: border-color 0.15s, color 0.15s; }
-    .badge:hover { border-color: var(--accent); color: var(--text); }
-    .projects-grid { display: grid; gap: 16px; }
-    .card { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 24px; transition: border-color 0.2s, transform 0.2s; }
-    .card:hover { border-color: var(--accent); transform: translateY(-2px); }
-    .card-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; margin-bottom: 10px; }
-    .card-title { font-family: 'JetBrains Mono', monospace; font-size: 15px; font-weight: 500; color: var(--accent); }
-    .card-link { font-size: 13px; color: var(--muted); white-space: nowrap; flex-shrink: 0; transition: color 0.15s; }
-    .card-link:hover { color: var(--accent); text-decoration: none; }
-    .card-desc { color: var(--muted); font-size: 14px; margin-bottom: 14px; line-height: 1.6; }
-    .card-desc strong { color: var(--text); font-weight: 500; }
-    .card-stack { display: flex; flex-wrap: wrap; gap: 6px; }
-    .tag { font-size: 11px; font-family: 'JetBrains Mono', monospace; padding: 2px 8px; border-radius: 4px; background: var(--bg); border: 1px solid var(--border); color: var(--muted); }
-    .contact-links { display: flex; flex-direction: column; gap: 12px; }
-    .contact-item { display: flex; align-items: center; gap: 12px; font-size: 15px; }
-    .contact-label { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--muted); width: 72px; flex-shrink: 0; }
-    footer { padding: 24px 0; text-align: center; font-size: 13px; color: var(--muted); border-top: 1px solid var(--border); font-family: 'JetBrains Mono', monospace; }
-    @media (max-width: 560px) {
-      nav .container { flex-direction: column; gap: 10px; align-items: flex-start; }
-      .nav-links { gap: 16px; }
-      .hero { padding: 48px 0 40px; }
-      .hero h1 { font-size: 1.8rem; }
-      section { padding: 48px 0; }
-      .card-header { flex-direction: column; gap: 4px; }
-    }
-  </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Tajaddin Gafarov · ML Engineer</title>
+<meta name="description" content="Machine learning engineer and M.S. Computer Science candidate at USF. LLM agents, eval harnesses, and reliability tooling, each with a measured result and a public repo." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: oklch(0.975 0.004 165);
+    --ink: oklch(0.24 0.02 165);
+    --ink-soft: oklch(0.38 0.02 165);
+    --green: oklch(0.42 0.09 165);
+    --green-deep: oklch(0.32 0.07 165);
+    --green-wash: oklch(0.93 0.018 165);
+    --gold: oklch(0.86 0.08 95);
+    --gold-wash: oklch(0.95 0.035 95);
+    --rule: oklch(0.86 0.012 165);
+    --mono: 'IBM Plex Mono', ui-monospace, monospace;
+    --sans: 'IBM Plex Sans', system-ui, sans-serif;
+  }
+  html { scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+  body {
+    background: var(--bg); color: var(--ink);
+    font-family: var(--sans); font-size: 17px; line-height: 1.65;
+  }
+  a { color: var(--green); text-underline-offset: 3px; }
+  a:hover { color: var(--green-deep); }
+  :focus-visible { outline: 2px solid var(--green); outline-offset: 3px; border-radius: 2px; }
+  .wrap { max-width: 880px; margin: 0 auto; padding: 0 24px; }
+
+  /* ---- masthead band: the committed green surface ---- */
+  .band { background: var(--green-deep); color: oklch(0.96 0.01 165); }
+  .band a { color: inherit; }
+  .masthead { display: flex; justify-content: space-between; align-items: baseline; padding: 18px 0; font-family: var(--mono); font-size: 13.5px; }
+  .masthead nav { display: flex; gap: 22px; }
+  .masthead nav a { text-decoration: none; opacity: 0.85; }
+  .masthead nav a:hover { opacity: 1; text-decoration: underline; }
+  .hero { padding: 72px 0 84px; }
+  .hero h1 {
+    font-family: var(--mono); font-weight: 600;
+    font-size: clamp(2rem, 6vw, 3.4rem);
+    line-height: 1.12; letter-spacing: -0.02em; text-wrap: balance;
+  }
+  .hero h1 .cursor { display: inline-block; width: 0.55em; height: 0.95em; background: var(--gold); vertical-align: -0.12em; margin-left: 0.12em; }
+  @media (prefers-reduced-motion: no-preference) {
+    .hero h1 .cursor { animation: blink 1.1s steps(1) infinite; }
+    @keyframes blink { 50% { opacity: 0; } }
+  }
+  .hero .thesis { margin-top: 26px; font-size: clamp(1.05rem, 2.4vw, 1.3rem); max-width: 36em; color: oklch(0.9 0.02 165); text-wrap: pretty; }
+  .hero .thesis strong { color: oklch(0.97 0.01 95); font-weight: 600; }
+  .factline { margin-top: 34px; font-family: var(--mono); font-size: 13.5px; color: oklch(0.82 0.03 165); display: flex; flex-wrap: wrap; gap: 8px 0; }
+  .factline span + span::before { content: "·"; margin: 0 10px; color: var(--gold); }
+  @media (prefers-reduced-motion: no-preference) {
+    .hero h1, .hero .thesis, .factline { animation: rise 0.55s cubic-bezier(0.16, 1, 0.3, 1) both; }
+    .hero .thesis { animation-delay: 0.08s; }
+    .factline { animation-delay: 0.16s; }
+    @keyframes rise { from { opacity: 0; transform: translateY(14px); } }
+  }
+
+  /* ---- bench report: the signature ---- */
+  section { padding: 72px 0; }
+  .report-head { display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 8px; border-bottom: 2px solid var(--ink); padding-bottom: 12px; }
+  h2 { font-family: var(--mono); font-weight: 600; font-size: 1.25rem; letter-spacing: 0.01em; }
+  .report-meta { font-family: var(--mono); font-size: 12.5px; color: var(--ink-soft); }
+  .report-note { margin-top: 14px; color: var(--ink-soft); max-width: 60ch; font-size: 15.5px; }
+  .bench { list-style: none; margin-top: 10px; }
+  .bench li { display: grid; grid-template-columns: minmax(0, 1fr) 250px; gap: 8px 32px; padding: 22px 12px; border-bottom: 1px solid var(--rule); margin: 0 -12px; transition: background-color 0.15s ease-out; }
+  .bench li:hover { background: var(--green-wash); }
+  .bench li.flag { background: var(--gold-wash); border-bottom-color: var(--gold); }
+  .bench .repo { font-family: var(--mono); font-size: 15px; font-weight: 600; }
+  .bench .repo a { color: var(--green-deep); text-decoration: none; border-bottom: 1.5px solid var(--green); }
+  .bench .repo a:hover { border-bottom-width: 2.5px; }
+  .bench .what { margin-top: 6px; font-size: 15.5px; color: var(--ink-soft); max-width: 52ch; text-wrap: pretty; }
+  .bench .result { font-family: var(--mono); font-size: 14px; line-height: 1.5; color: var(--green-deep); align-self: center; }
+  .bench .result b { display: block; font-size: 1.18em; font-weight: 600; color: var(--ink); }
+  .bench .flagnote { font-family: var(--mono); font-size: 12px; color: oklch(0.5 0.09 80); margin-top: 8px; }
+  .bench-foot { margin-top: 18px; font-family: var(--mono); font-size: 12.5px; color: var(--ink-soft); }
+  @media (prefers-reduced-motion: no-preference) {
+    .bench li { animation: rise 0.5s cubic-bezier(0.16, 1, 0.3, 1) both; animation-timeline: view(); animation-range: entry 0% entry 40%; }
+    @supports not (animation-timeline: view()) { .bench li { animation: none; } }
+  }
+
+  /* ---- work log ---- */
+  .log { margin-top: 10px; }
+  .log-entry { display: grid; grid-template-columns: 215px minmax(0, 1fr); gap: 6px 32px; padding: 26px 0; border-bottom: 1px solid var(--rule); }
+  .log-entry:last-child { border-bottom: none; }
+  .log-when { font-family: var(--mono); font-size: 13px; color: var(--ink-soft); line-height: 1.7; }
+  .log-when b { display: block; color: var(--ink); font-weight: 600; }
+  .log-role { font-weight: 600; font-size: 16.5px; }
+  .log-body { margin-top: 6px; color: var(--ink-soft); font-size: 15.5px; max-width: 58ch; text-wrap: pretty; }
+  .edu .log-body { max-width: 58ch; }
+
+  /* ---- contact band ---- */
+  .contact { padding-top: 64px; padding-bottom: 72px; }
+  .contact h2 { color: oklch(0.96 0.01 165); }
+  .contact p { margin-top: 14px; max-width: 48ch; color: oklch(0.88 0.02 165); }
+  .contact-row { margin-top: 26px; display: flex; flex-wrap: wrap; gap: 14px; }
+  .contact-row a {
+    font-family: var(--mono); font-size: 14px; text-decoration: none;
+    border: 1.5px solid oklch(0.6 0.06 165); border-radius: 6px; padding: 10px 18px;
+    transition: background-color 0.18s ease-out, border-color 0.18s ease-out, transform 0.18s ease-out;
+  }
+  .contact-row a:hover { background: oklch(0.38 0.08 165); border-color: var(--gold); transform: translateY(-1px); }
+  .contact-row a.primary { background: var(--gold); border-color: var(--gold); color: var(--green-deep); font-weight: 600; }
+  .contact-row a.primary:hover { background: oklch(0.9 0.09 95); }
+  footer { padding: 20px 0 36px; font-family: var(--mono); font-size: 12px; color: oklch(0.74 0.03 165); }
+
+  @media (max-width: 680px) {
+    .masthead { flex-direction: column; gap: 8px; }
+    .hero { padding: 52px 0 60px; }
+    .bench li { grid-template-columns: 1fr; gap: 12px; }
+    .bench .result { align-self: start; }
+    .log-entry { grid-template-columns: 1fr; }
+  }
+</style>
 </head>
 <body>
-<nav>
-  <div class="container">
-    <span class="nav-brand">tajaddin.gafarov</span>
-    <ul class="nav-links">
-      <li><a href="#about">About</a></li>
-      <li><a href="#skills">Skills</a></li>
-      <li><a href="#projects">Projects</a></li>
-      <li><a href="#contact">Contact</a></li>
-    </ul>
+
+<div class="band">
+  <div class="wrap">
+    <header class="masthead">
+      <span>tajaddin.github.io</span>
+      <nav>
+        <a href="#bench">bench</a>
+        <a href="#work">work</a>
+        <a href="#contact">contact</a>
+        <a href="https://github.com/Tajaddin" rel="noopener">github &#8599;</a>
+      </nav>
+    </header>
+    <div class="hero">
+      <h1>Tajaddin Gafarov<span class="cursor" aria-hidden="true"></span></h1>
+      <p class="thesis">Machine learning engineer. I build <strong>LLM agents and the eval harnesses</strong> behind them. Every project on this page ships with a measured result and a public repo, including the one where the result said no.</p>
+      <p class="factline">
+        <span>M.S. CS (Data Science) @ USF, May 2027</span>
+        <span>Tampa, FL</span>
+        <span>Remote US</span>
+        <span>US work authorized, no sponsorship</span>
+      </p>
+    </div>
   </div>
-</nav>
-<div class="container">
-  <header class="hero">
-    <p class="hero-label">// ML Engineer</p>
-    <h1>Tajaddin Gafarov</h1>
-    <p class="hero-tagline">I build <span>LLM agents</span>, RAG pipelines, and production ML systems.<br>Based in Tampa, FL. Open to remote.</p>
-    <div class="hero-cta">
-      <a href="https://github.com/Tajaddin" class="btn btn-primary" target="_blank" rel="noopener">GitHub Profile</a>
-      <a href="#contact" class="btn btn-outline">Get in touch</a>
-    </div>
-  </header>
-  <section id="about">
-    <p class="section-label">01 / about</p>
-    <h2>About Me</h2>
-    <div class="about-text">
-      <p>I am an ML engineer focused on <strong>LLM agents and agentic AI systems</strong>. I design and ship RAG pipelines, multi-agent workflows built with LangGraph, and inference APIs that run at production scale.</p>
-      <p>Previously I ran experiments on a <strong>4-GPU cluster</strong> comparing knowledge-editing methods in large language models, tracking results with MLflow across 48 hours of continuous runs. I am authorized to work in the US and do not require sponsorship.</p>
-    </div>
-  </section>
-  <section id="skills">
-    <p class="section-label">02 / skills</p>
-    <h2>Tech Stack</h2>
-    <div class="skills-grid">
-      <span class="badge">Python</span><span class="badge">LangChain</span><span class="badge">LangGraph</span><span class="badge">RAG</span><span class="badge">pgvector</span><span class="badge">MLflow</span><span class="badge">FastAPI</span><span class="badge">PyTorch</span><span class="badge">HuggingFace</span><span class="badge">AWS</span><span class="badge">Docker</span><span class="badge">Kubernetes</span><span class="badge">PostgreSQL</span><span class="badge">Node.js</span><span class="badge">TypeScript</span><span class="badge">CUDA / C++</span>
-    </div>
-  </section>
-  <section id="projects">
-    <p class="section-label">03 / projects</p>
-    <h2>Projects</h2>
-    <div class="projects-grid">
-      <div class="card">
-        <div class="card-header">
-          <span class="card-title">llm-knowledge-editing</span>
-          <a href="https://github.com/Tajaddin/llm-knowledge-editing" class="card-link" target="_blank" rel="noopener">&#8599; GitHub</a>
-        </div>
-        <p class="card-desc">LLM evaluation platform for knowledge-editing methods. Builds RAG ingestion pipelines with <strong>pgvector retrieval</strong> and tracks experiments with MLflow across three methods: ROME, LTE-LoRA, and ICE. All runs executed on a <strong>4-GPU cluster over 48 hours</strong>.</p>
-        <div class="card-stack"><span class="tag">Python</span><span class="tag">HuggingFace</span><span class="tag">LLaMA2</span><span class="tag">LangChain</span><span class="tag">MLflow</span><span class="tag">pgvector</span></div>
-      </div>
-      <div class="card">
-        <div class="card-header">
-          <span class="card-title">dota2-build-generator</span>
-          <a href="https://github.com/Tajaddin/dota2-build-generator" class="card-link" target="_blank" rel="noopener">&#8599; GitHub</a>
-        </div>
-        <p class="card-desc">Embedding-based recommender trained on <strong>50K+ matches</strong>. Deployed as a production inference API with a TypeScript + Node.js backend, Docker packaging, and a full CI/CD pipeline.</p>
-        <div class="card-stack"><span class="tag">Python</span><span class="tag">PyTorch</span><span class="tag">TypeScript</span><span class="tag">Node.js</span><span class="tag">Docker</span><span class="tag">CI/CD</span></div>
-      </div>
-      <div class="card">
-        <div class="card-header">
-          <span class="card-title">cuda-inlj</span>
-          <a href="https://github.com/Tajaddin/cuda-inlj" class="card-link" target="_blank" rel="noopener">&#8599; GitHub</a>
-        </div>
-        <p class="card-desc">GPU-accelerated B+ Tree index nested-loop join. Achieves a <strong>4.2x speedup</strong> over the CPU baseline on 10M-row datasets, benchmarked within 5% of theoretical memory-bandwidth bounds.</p>
-        <div class="card-stack"><span class="tag">CUDA</span><span class="tag">C++</span><span class="tag">GPU</span></div>
-      </div>
-    </div>
-  </section>
-  <section id="contact">
-    <p class="section-label">04 / contact</p>
-    <h2>Get in Touch</h2>
-    <div class="contact-links">
-      <div class="contact-item"><span class="contact-label">email</span><a href="mailto:gafarovtajaddin@gmail.com">gafarovtajaddin@gmail.com</a></div>
-      <div class="contact-item"><span class="contact-label">linkedin</span><a href="https://www.linkedin.com/in/tajaddin-gafarov" target="_blank" rel="noopener">linkedin.com/in/tajaddin-gafarov</a></div>
-      <div class="contact-item"><span class="contact-label">github</span><a href="https://github.com/Tajaddin" target="_blank" rel="noopener">github.com/Tajaddin</a></div>
-      <div class="contact-item"><span class="contact-label">location</span><span style="color: var(--muted);">Tampa, FL &mdash; open to remote</span></div>
-    </div>
-  </section>
 </div>
-<footer>
-  <div class="container">&copy; 2025 Tajaddin Gafarov &mdash; built with plain HTML &amp; CSS</div>
-</footer>
+
+<main class="wrap">
+  <section id="bench" aria-labelledby="bench-h">
+    <div class="report-head">
+      <h2 id="bench-h">Bench report</h2>
+      <span class="report-meta">6 runs · all public · updated 2026-06</span>
+    </div>
+    <p class="report-note">Each row is one repo: what it does, and the number it earned. Click through, clone, rerun.</p>
+    <ul class="bench">
+      <li>
+        <div>
+          <p class="repo"><a href="https://github.com/Tajaddin/langgraph-research-pilot" rel="noopener">langgraph-research-pilot</a></p>
+          <p class="what">Research agent on a LangGraph plan / search / verify graph with human-in-the-loop gates. Live demo on HuggingFace Spaces.</p>
+        </div>
+        <p class="result"><b>+17% F1</b> vs single-shot baseline on HotpotQA</p>
+      </li>
+      <li>
+        <div>
+          <p class="repo"><a href="https://github.com/Tajaddin/async-llm-batcher" rel="noopener">async-llm-batcher</a></p>
+          <p class="what">Concurrent LLM batch runner: rate limiting, backoff retries, dead-letter queue, resume-after-kill checkpointing.</p>
+        </div>
+        <p class="result"><b>988 / 1000</b> success under injected provider failures</p>
+      </li>
+      <li>
+        <div>
+          <p class="repo"><a href="https://github.com/Tajaddin/schema-guard" rel="noopener">schema-guard</a></p>
+          <p class="what">Tiered LLM JSON repair (cheap repair before smart regen) with per-tier cost tracking.</p>
+        </div>
+        <p class="result"><b>5.5&times; cheaper</b> than instructor at equal 100% compliance</p>
+      </li>
+      <li>
+        <div>
+          <p class="repo"><a href="https://github.com/Tajaddin/mcp-server-toolkit" rel="noopener">mcp-server-toolkit</a></p>
+          <p class="what">Reusable Anthropic MCP framework with three example servers and an in-memory test runner.</p>
+        </div>
+        <p class="result"><b>8.2 ms</b> p99 tool round-trip, 6&times; under budget</p>
+      </li>
+      <li class="flag">
+        <div>
+          <p class="repo"><a href="https://github.com/Tajaddin/reproduce-stepback" rel="noopener">reproduce-stepback</a></p>
+          <p class="what">Reproduction of an ICLR 2024 prompting result on Claude Haiku 4.5, run to completion and reported in full.</p>
+          <p class="flagnote">&#9873; negative result, published anyway</p>
+        </div>
+        <p class="result"><b>+5.5 pts &rarr; +0.0</b> the paper's effect did not survive</p>
+      </li>
+      <li>
+        <div>
+          <p class="repo"><a href="https://github.com/Tajaddin/streaming-etl-pipeline" rel="noopener">streaming-etl-pipeline</a></p>
+          <p class="what">Per-partition watermark ETL into DuckDB with explicit late-event handling.</p>
+        </div>
+        <p class="result"><b>4,566 events/sec</b> at 0% false-late</p>
+      </li>
+    </ul>
+    <p class="bench-foot">full bench: <a href="https://github.com/Tajaddin?tab=repositories" rel="noopener">github.com/Tajaddin</a></p>
+  </section>
+
+  <section id="work" aria-labelledby="work-h">
+    <div class="report-head">
+      <h2 id="work-h">Work log</h2>
+      <span class="report-meta">remote, part-time, alongside the degree</span>
+    </div>
+    <div class="log">
+      <div class="log-entry">
+        <p class="log-when"><b>Jun 2023 &ndash; present</b>SƏBA ASC · Baku, AZ<br>remote · part-time</p>
+        <div>
+          <p class="log-role">Machine Learning Engineer</p>
+          <p class="log-body">GenAI features across 8 ERP systems: LangChain RAG pipelines, LangGraph orchestration, PEFT/LoRA fine-tuning. Inference APIs on AWS processing 500K+ records a day, drift monitored with MLflow across 3 production models.</p>
+        </div>
+      </div>
+      <div class="log-entry">
+        <p class="log-when"><b>Sep 2021 &ndash; May 2023</b>AzeriMed LLC · Baku, AZ<br>remote · part-time</p>
+        <div>
+          <p class="log-role">Data Analyst &amp; Software Developer</p>
+          <p class="log-body">React + TypeScript dashboards for 50+ clinical staff, SQL analytics pipelines cutting report generation 70%, Python ingestion validating 100K+ records a month.</p>
+        </div>
+      </div>
+      <div class="log-entry edu">
+        <p class="log-when"><b>2021 &ndash; 2027</b>University of South Florida<br>Tampa, FL</p>
+        <div>
+          <p class="log-role">B.S. Computer Science (2025) &rarr; M.S. Computer Science, Data Science track (May 2027)</p>
+          <p class="log-body">Graduate LLM coursework includes a reproducibility study of three knowledge-editing methods (ROME, LTE-LoRA, ICE) on LLaMA2-7B, written up ACL-style.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<div class="band" id="contact">
+  <div class="wrap contact">
+    <h2>Run your own eval</h2>
+    <p>The fastest way to assess me is the repos above. The second fastest is a conversation. Open to ML Engineer and Software Engineer roles, remote US or Tampa.</p>
+    <div class="contact-row">
+      <a class="primary" href="mailto:gafarovtajaddin@gmail.com">email me</a>
+      <a href="https://github.com/Tajaddin" rel="noopener">github</a>
+      <a href="https://www.linkedin.com/in/tajaddin-gafarov" rel="noopener">linkedin</a>
+    </div>
+  </div>
+  <div class="wrap">
+    <footer>&copy; 2026 Tajaddin Gafarov · plain HTML, no tracking, view source freely</footer>
+  </div>
+</div>
+
 </body>
 </html>
