@@ -11,7 +11,14 @@
 <meta property="og:url" content="https://tajaddin.github.io/">
 <meta property="og:title" content="Tajaddin Gafarov · AI and Software Engineer">
 <meta property="og:description" content="LLM agents, evaluation, data pipelines and backend systems, each with a measured result and a public repo. Tampa, FL · M.S. CS @ USF, May 2027.">
-<meta name="twitter:card" content="summary">
+<meta property="og:image" content="https://tajaddin.github.io/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Tajaddin Gafarov: I build LLM systems and measure them. 12/12 bugs fixed by an agent, +17% F1 on HotpotQA, 0% false-late events in a streaming ETL.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Tajaddin Gafarov · AI and Software Engineer">
+<meta name="twitter:description" content="LLM agents, evaluation, data pipelines and backend systems, each with a measured result and a public repo. Tampa, FL · M.S. CS @ USF, May 2027.">
+<meta name="twitter:image" content="https://tajaddin.github.io/og.png">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230b1220'/%3E%3Ctext x='32' y='42' font-family='Arial,sans-serif' font-size='28' font-weight='700' fill='%2367e8f9' text-anchor='middle'%3ETG%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -25,18 +32,23 @@
   "jobTitle": "AI and Software Engineer",
   "email": "mailto:gafarovtajaddin@gmail.com",
   "address": { "@type": "PostalAddress", "addressLocality": "Tampa", "addressRegion": "FL", "addressCountry": "US" },
-  "alumniOf": { "@type": "CollegeOrUniversity", "name": "University of South Florida" },
+  "alumniOf": { "@type": "CollegeOrUniversity", "name": "University of South Florida", "sameAs": "https://www.usf.edu/" },
+  "hasCredential": [
+    { "@type": "EducationalOccupationalCredential", "credentialCategory": "degree", "name": "Bachelor of Science in Computer Science", "recognizedBy": { "@type": "CollegeOrUniversity", "name": "University of South Florida" } }
+  ],
   "knowsAbout": ["Large language models", "LLM agents", "Retrieval-augmented generation", "Machine learning", "Data engineering", "Backend engineering"],
   "sameAs": ["https://github.com/Tajaddin", "https://www.linkedin.com/in/tajaddin-gafarov"]
 }
 </script>
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  /* Metric-matched fallback so the swap to Inter does not shift the layout. */
+  @font-face { font-family: 'Inter Fallback'; src: local('Arial'); ascent-override: 90.49%; descent-override: 22.56%; line-gap-override: 0%; size-adjust: 107.06%; }
   :root {
     --bg: #0b1220; --bg-2: #0f1a2e; --card: #121f36; --line: #1f2f4d;
     --ink: #e6edf7; --ink-2: #a9b6cc; --ink-3: #7487a6;
     --cyan: #67e8f9; --violet: #a78bfa; --green: #6ee7b7; --amber: #fcd34d;
-    --sans: 'Inter', system-ui, -apple-system, Segoe UI, sans-serif;
+    --sans: 'Inter', 'Inter Fallback', system-ui, -apple-system, Segoe UI, sans-serif;
     --mono: 'JetBrains Mono', ui-monospace, Consolas, monospace;
     --r: 14px;
   }
@@ -45,8 +57,13 @@
   body { background: var(--bg); color: var(--ink); font-family: var(--sans); font-size: 16.5px; line-height: 1.6; -webkit-font-smoothing: antialiased; }
   a { color: var(--cyan); text-decoration: none; }
   a:hover { text-decoration: underline; text-underline-offset: 3px; }
+  /* Links inside running text are underlined, so colour is not the only cue. */
+  p a:not(.btn), li a { text-decoration: underline; text-decoration-color: rgba(103,232,249,.5); text-underline-offset: 3px; }
+  p a:not(.btn):hover, li a:hover { text-decoration-color: currentColor; }
   :focus-visible { outline: 2px solid var(--cyan); outline-offset: 3px; border-radius: 4px; }
   .wrap { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+  .skip { position: absolute; left: 16px; top: -48px; z-index: 50; background: var(--cyan); color: #0b1220; font-weight: 600; padding: 8px 14px; border-radius: 8px; }
+  .skip:focus { top: 12px; text-decoration: none; }
 
   /* nav */
   header.nav { position: sticky; top: 0; z-index: 20; backdrop-filter: blur(10px); background: rgba(11,18,32,.72); border-bottom: 1px solid transparent; transition: border-color .2s; }
@@ -54,8 +71,9 @@
   .nav .wrap { display: flex; align-items: center; justify-content: space-between; height: 62px; }
   .brand { font-weight: 700; letter-spacing: -.01em; color: var(--ink); }
   .brand span { color: var(--cyan); }
-  .nav nav { display: flex; gap: 26px; font-size: 14.5px; }
-  .nav nav a { color: var(--ink-2); }
+  .nav nav { display: flex; gap: 26px; font-size: 14.5px; overflow-x: auto; scrollbar-width: none; padding: 6px 0; }
+  .nav nav::-webkit-scrollbar { display: none; }
+  .nav nav a { color: var(--ink-2); white-space: nowrap; }
   .nav nav a:hover { color: var(--ink); text-decoration: none; }
 
   /* hero */
@@ -103,6 +121,43 @@
   .card .stack span { font-family: var(--mono); font-size: 11.5px; color: var(--ink-3); border: 1px solid var(--line); padding: 2px 8px; border-radius: 6px; }
   .card.story { grid-column: 1 / -1; background: linear-gradient(135deg, rgba(167,139,250,.12), rgba(103,232,249,.06)); }
   .more { margin-top: 22px; color: var(--ink-3); font-size: 14.5px; }
+  .card .cta-row { margin-top: 12px; font-size: 14px; }
+  .card .cta-row a { color: var(--cyan); }
+
+  /* case studies */
+  .cases { display: grid; gap: 14px; }
+  details.case { background: var(--card); border: 1px solid var(--line); border-radius: var(--r); transition: border-color .2s; }
+  details.case[open], details.case:hover { border-color: rgba(103,232,249,.45); }
+  details.case summary { list-style: none; cursor: pointer; padding: 20px 24px; display: grid; grid-template-columns: 1fr auto; gap: 8px 20px; align-items: center; }
+  details.case summary::-webkit-details-marker { display: none; }
+  details.case summary:focus-visible { outline: 2px solid var(--cyan); outline-offset: -2px; border-radius: var(--r); }
+  details.case summary .tag { grid-column: 1; font-family: var(--mono); font-size: 12px; color: var(--violet); }
+  details.case summary h3 { grid-column: 1; margin-top: 4px; font-size: 1.12rem; letter-spacing: -.01em; }
+  details.case summary .outcome { grid-column: 1; color: var(--ink-2); font-size: 14.5px; }
+  details.case summary .outcome b { color: var(--green); font-weight: 650; }
+  details.case summary .chev { grid-column: 2; grid-row: 1 / span 3; align-self: center; width: 34px; height: 34px; border: 1px solid var(--line); border-radius: 50%; display: grid; place-items: center; color: var(--ink-2); transition: transform .25s; }
+  details.case[open] summary .chev { transform: rotate(180deg); border-color: var(--cyan); color: var(--cyan); }
+  @media (prefers-reduced-motion: reduce) { details.case summary .chev { transition: none; } }
+  .case-body { padding: 18px 24px 24px; border-top: 1px dashed var(--line); display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px 28px; }
+  .case-body h4 { font-family: var(--mono); font-size: 12px; font-weight: 500; letter-spacing: .05em; text-transform: uppercase; color: var(--cyan); }
+  .case-body p { margin-top: 6px; color: var(--ink-2); font-size: 14.8px; }
+  .case-body p b { color: var(--ink); font-weight: 600; }
+  .case-body .full { grid-column: 1 / -1; }
+  .case-body code { font-family: var(--mono); font-size: 13px; color: var(--ink); background: rgba(255,255,255,.04); padding: 1px 5px; border-radius: 4px; }
+  .case-body .links { margin-top: 10px; font-size: 14px; }
+  .label { display: inline-block; vertical-align: middle; font-family: var(--mono); font-size: 11px; letter-spacing: .03em; border: 1px solid currentColor; border-radius: 6px; padding: 1px 7px; margin-left: 6px; }
+  .label.rerun { color: var(--green); }
+  .label.live { color: var(--cyan); }
+  .label.sim { color: var(--amber); }
+  .legend { margin-top: 18px; color: var(--ink-3); font-size: 13.5px; }
+
+  /* education */
+  .edu { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+  .edu .deg { background: var(--bg-2); border: 1px solid var(--line); border-radius: var(--r); padding: 22px 24px; }
+  .edu .deg .when { font-family: var(--mono); font-size: 13px; color: var(--ink-3); }
+  .edu .deg h3 { margin-top: 8px; font-size: 1.08rem; }
+  .edu .deg p { margin-top: 8px; color: var(--ink-2); font-size: 14.8px; }
+  .edu .note { grid-column: 1 / -1; color: var(--ink-2); font-size: 14.8px; }
 
   /* experience */
   .timeline { display: grid; gap: 16px; }
@@ -126,6 +181,7 @@
   .contact p { margin: 14px auto 0; color: var(--ink-2); max-width: 44ch; }
   .contact .cta { justify-content: center; }
   footer { padding: 28px 0 40px; color: var(--ink-3); font-size: 13px; text-align: center; }
+  footer a { color: var(--ink-2); text-decoration: underline; text-underline-offset: 3px; }
 
   /* reveal on scroll */
   /* Content is visible by default; the fade-in only applies once JS is running,
@@ -136,24 +192,32 @@
 
   @media (max-width: 860px) {
     .numbers { grid-template-columns: repeat(2, 1fr); }
-    .grid, .skills { grid-template-columns: 1fr; }
+    .grid, .skills, .edu, .case-body { grid-template-columns: 1fr; }
     .job { grid-template-columns: 1fr; gap: 10px; }
-    .nav nav { gap: 16px; }
-    .nav nav a.hide-sm { display: none; }
+    .nav .wrap { gap: 14px; }
+    .nav nav { gap: 18px; padding-right: 28px; mask-image: linear-gradient(90deg, #000 82%, transparent); -webkit-mask-image: linear-gradient(90deg, #000 82%, transparent); }
     .hero .wrap { padding-top: 76px; padding-bottom: 80px; }
     section { padding: 68px 0; }
+  }
+  @media (max-width: 420px) {
+    .numbers { grid-template-columns: 1fr; }
+    .num b { font-size: 1.7rem; }
   }
 </style>
 </head>
 <body>
 
+<a class="skip" href="#work">Skip to projects</a>
 <header class="nav" id="nav">
   <div class="wrap">
     <a class="brand" href="#top">Tajaddin <span>Gafarov</span></a>
-    <nav>
+    <nav aria-label="Sections">
       <a href="#work">Work</a>
-      <a href="#experience" class="hide-sm">Experience</a>
-      <a href="#skills" class="hide-sm">Skills</a>
+      <a href="#cases">Case studies</a>
+      <a href="#experience">Experience</a>
+      <a href="#education">Education</a>
+      <a href="#skills">Skills</a>
+      <a href="Tajaddin_Gafarov_Resume.pdf">Resume</a>
       <a href="#contact">Contact</a>
     </nav>
   </div>
@@ -178,6 +242,8 @@
           <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5a12 12 0 0 0-3.8 23.4c.6.1.8-.3.8-.6v-2c-3.3.7-4-1.6-4-1.6-.6-1.4-1.4-1.8-1.4-1.8-1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.8-1.6-2.7-.3-5.5-1.3-5.5-6 0-1.3.5-2.4 1.2-3.2-.1-.3-.5-1.5.1-3.2 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0C17.3 4.6 18.3 5 18.3 5c.7 1.7.2 2.9.1 3.2.8.8 1.2 1.9 1.2 3.2 0 4.6-2.8 5.6-5.5 5.9.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6A12 12 0 0 0 12 .5z"/></svg>GitHub</a>
         <a class="btn" href="https://www.linkedin.com/in/tajaddin-gafarov" rel="noopener">
           <svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9h4v12H3zM9 9h3.8v1.7h.1c.5-1 1.8-2 3.8-2 4 0 4.8 2.6 4.8 6V21h-4v-5.4c0-1.3 0-3-1.8-3s-2.1 1.4-2.1 2.9V21H9z"/></svg>LinkedIn</a>
+        <a class="btn" href="Tajaddin_Gafarov_Resume.pdf" download="Tajaddin_Gafarov_Resume.pdf">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>Resume (PDF)</a>
       </div>
     </div>
   </div>
@@ -187,7 +253,7 @@
       <div class="numbers reveal">
         <div class="num"><b>12/12</b><span>bugs fixed by my Claude agent, $0.10 total</span></div>
         <div class="num"><b>+17%</b><span>F1 from a LangGraph agent on HotpotQA</span></div>
-        <div class="num"><b>99.92%</b><span>webhook delivery under 30% injected failure</span></div>
+        <div class="num"><b>99.92%</b><span>webhook delivery under 30% injected failure, in a deterministic simulation</span></div>
         <div class="num"><b>60+</b><span>public repos, most with tests and a benchmark</span></div>
       </div>
     </div>
@@ -206,6 +272,7 @@
           <p>Reproduces, patches and verifies Python bugs in a pytest-driven loop, with an isolated workspace per attempt.</p>
           <p class="result"><b>12/12 bugs fixed</b> on Claude Haiku 4.5 · 3.58 iterations per bug · $0.10 total</p>
           <div class="stack"><span>Python</span><span>Anthropic Agent SDK</span><span>pytest</span></div>
+          <p class="cta-row"><a href="#case-agent">Read the case study</a></p>
         </article>
         <article class="card reveal">
           <span class="tag">RAG · agents</span>
@@ -232,8 +299,9 @@
           <span class="tag">Distributed systems</span>
           <h3><a href="https://github.com/Tajaddin/webhook-delivery" rel="noopener">At-least-once webhook delivery</a></h3>
           <p>Exponential backoff, a dead-letter queue, HMAC signing and idempotency keys, tested with fault injection.</p>
-          <p class="result"><b>99.92% eventual delivery</b> under 30% injected transient failures</p>
+          <p class="result"><b>99.92% eventual delivery</b> under 30% injected transient failures (deterministic simulation, no network)</p>
           <div class="stack"><span>TypeScript</span><span>Hono</span><span>Docker</span></div>
+          <p class="cta-row"><a href="#case-webhook">Read the case study</a></p>
         </article>
         <article class="card reveal">
           <span class="tag">Backend · Go</span>
@@ -248,20 +316,120 @@
           <p>A baseline hit 99–100% accuracy, which is usually a sign something is wrong. A six-step audit traced it to publisher and stylistic leakage in the data, so I reported the honest number on a leakage-resistant held-out set instead.</p>
           <p class="result"><b>62.1% accuracy, 0.676 ROC-AUC</b> on 1,267 held-out LIAR statements, reproducible from a fresh clone</p>
           <div class="stack"><span>scikit-learn</span><span>Hugging Face</span><span>SHAP</span><span>LIME</span><span>MLflow</span></div>
+          <p class="cta-row"><a href="#case-fakenews">Read the case study</a></p>
         </article>
       </div>
-      <p class="more reveal">Also: <a href="https://github.com/Tajaddin/spring-boot-task-api">Spring Boot API</a> · <a href="https://github.com/Tajaddin/aspnetcore-inventory-api">ASP.NET Core API</a> · <a href="https://github.com/Tajaddin/multi-agent-supervisor">multi-agent supervisor</a> · <a href="https://github.com/Tajaddin/streaming-etl-pipeline">streaming ETL</a> · <a href="https://github.com/Tajaddin/cuda-inlj">CUDA join</a> · <a href="https://github.com/Tajaddin?tab=repositories">all repositories</a></p>
+      <p class="more reveal">Also: <a href="https://github.com/Tajaddin/spring-boot-task-api">Spring Boot API</a> · <a href="https://github.com/Tajaddin/aspnetcore-inventory-api">ASP.NET Core API</a> · <a href="https://github.com/Tajaddin/multi-agent-supervisor">multi-agent supervisor</a> · <a href="#case-etl">streaming ETL</a> · <a href="https://github.com/Tajaddin/kafka-clickhouse-analytics">Kafka to ClickHouse analytics</a> · <a href="#case-cuda">CUDA join</a> · <a href="https://github.com/Tajaddin?tab=repositories">all repositories</a></p>
     </div>
   </section>
 
-  <section id="experience" style="background:var(--bg-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)">
+
+  <section id="cases" style="background:var(--bg-2);border-top:1px solid var(--line)">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <h2>Case studies</h2>
+        <p>Five projects in more depth: the problem, the design, what was built, and what the measurement actually shows.</p>
+      </div>
+      <div class="cases">
+
+        <details class="case reveal" id="case-agent">
+          <summary>
+            <span class="tag">LLM agents · evaluation</span>
+            <h3>Autonomous bug-fix agent</h3>
+            <p class="outcome"><b>12/12 bugs fixed</b> on Claude Haiku 4.5, 3.58 iterations per bug, $0.10 for the whole sweep</p>
+            <span class="chev" aria-hidden="true">&#8964;</span>
+          </summary>
+          <div class="case-body">
+            <div><h4>Challenge</h4><p>Get an LLM to fix real Python bugs with evidence rather than confidence: the fix has to pass the repository's own pytest, within a bounded number of iterations and tokens, and the agent must not be able to edit the tests.</p></div>
+            <div><h4>Architecture</h4><p>A tool loop on the Anthropic Agent SDK with five tools: <code>list_dir</code>, <code>read_file</code>, <code>edit_file</code> (a <code>str_replace</code> that refuses ambiguous matches), <code>search_code</code> and <code>run_tests</code>. Each attempt runs in an isolated temporary workspace. A <code>MockLLM</code> returns the same <code>(content, stop_reason, usage)</code> shape as the real client, so the whole pipeline is testable without an API key.</p></div>
+            <div><h4>Solution</h4><p>The agent reads, edits and runs the tests; it stops at the first PASS or when the iteration budget runs out. The test file is held back from edits by instruction and the harness records every tool call, token and dollar per bug.</p></div>
+            <div><h4>Implementation</h4><p>Python. Twelve hand-built bugs (off-by-one, mutable default argument, shallow copy, inverted condition and so on), each with three or four assertions. The benchmark writes a JSON record per bug; CI runs the mock sweep on every push. 22 tests.</p></div>
+            <div class="full"><h4>Verified outcome</h4><p><b>Live Claude Haiku 4.5: 12/12 fixed, 3.58 LLM rounds and 5.58 tool calls per bug, $0.10 total</b> (77,457 tokens), from the committed benchmark file of 2026-05-20.<span class="label live">live result file</span> The mock pipeline was re-run on 2026-10-16: 12/12.<span class="label rerun">re-run</span></p>
+            <p class="links"><a href="https://github.com/Tajaddin/code-fix-agent" rel="noopener">github.com/Tajaddin/code-fix-agent</a></p></div>
+          </div>
+        </details>
+
+        <details class="case reveal" id="case-etl">
+          <summary>
+            <span class="tag">Data engineering · streaming</span>
+            <h3>Event-time streaming ETL with per-partition watermarks</h3>
+            <p class="outcome"><b>0% false-late events</b>, down from 71% with a single global watermark; windows match the ground truth exactly</p>
+            <span class="chev" aria-hidden="true">&#8964;</span>
+          </summary>
+          <div class="case-body">
+            <div><h4>Challenge</h4><p>Events arrive out of order across partitions. The first version used one global watermark and, at zero injected lateness, flagged 7,104 of 10,000 in-window events as late. The unit tests passed because they were single-partition.</p></div>
+            <div><h4>Architecture</h4><p>A message bus (in-memory, with a Kafka adapter) drained round-robin per partition, feeding a tumbling-window aggregator and a DuckDB sink with separate <code>windows</code> and <code>late_events</code> tables. A SQLite checkpointer stores per-partition offsets and the watermark floor so a restart never double-emits a closed window.</p></div>
+            <div><h4>Solution</h4><p>A <code>WatermarkTracker</code> keeps the maximum event time per partition; the effective watermark is the minimum across partitions, so a slow partition holds the clock back instead of having its events discarded. Genuinely late events go to a side output rather than being dropped.</p></div>
+            <div><h4>Implementation</h4><p>Python with DuckDB and SQLite. Writes run in explicit transactions per batch, which measured about three times faster than DuckDB's per-statement autocommit on this workload. 25 tests.</p></div>
+            <div class="full"><h4>Verified outcome</h4><p>50,000 events, 4 partitions, 50 keys: <b>0% false-late</b> against 71% for the naive version, and 2,550 windows emitted, which matches the ground truth.<span class="label rerun">re-run</span> Throughput is machine-dependent: 4,566 events/s in the README run, 7,450/s re-run on Linux, and about 480/s on a Windows PC whose antivirus slows file I/O, so the headline is the correctness number, not the rate.</p>
+            <p class="links"><a href="https://github.com/Tajaddin/streaming-etl-pipeline" rel="noopener">github.com/Tajaddin/streaming-etl-pipeline</a></p></div>
+          </div>
+        </details>
+
+        <details class="case reveal" id="case-fakenews">
+          <summary>
+            <span class="tag">Machine learning · data quality</span>
+            <h3>Fake-news detection: a leakage audit</h3>
+            <p class="outcome"><b>62.1% accuracy, 0.676 ROC-AUC</b> on the held-out LIAR test set, replacing a 99 to 100% number that came from leakage</p>
+            <span class="chev" aria-hidden="true">&#8964;</span>
+          </summary>
+          <div class="case-body">
+            <div><h4>Challenge</h4><p>On the usual fake-vs-real news corpus, plain logistic regression scored 99 to 100% on the test set out of the box. A result that good on a hard task is normally a sign the data is leaking the label.</p></div>
+            <div><h4>Architecture</h4><p>A six-step audit script: dataset size check, train/test text overlap, label-leaking metadata (publisher names, datetime artifacts, URL fragments), a random-label baseline, the train-versus-test gap, and seed sensitivity. The pipeline itself is TF-IDF (1 to 2-grams) plus logistic regression, with a Hugging Face transformer baseline, SHAP and LIME explanations and MLflow tracking.</p></div>
+            <div><h4>Solution</h4><p>The audit traced the accuracy to publisher and stylistic leakage, so the reported number moved to LIAR, a short-statement dataset, using the statement and its context only and no speaker identity, which would otherwise act as a label.</p></div>
+            <div><h4>Implementation</h4><p>Python and scikit-learn. CI downloads LIAR, builds the splits and re-evaluates on every push. On 2026-10-16 a 25-test suite was added, including a regression test on the reported metric; it immediately found a bug in the feature extractor (it crashed on any frame without a title column), which is fixed.</p></div>
+            <div class="full"><h4>Verified outcome</h4><p><b>62.1% accuracy, 0.676 ROC-AUC on 1,267 held-out LIAR statements</b>, reproduced exactly from a fresh clone on 2026-10-16.<span class="label rerun">re-run</span> It is deliberately an unimpressive number; the point of the project is knowing why the impressive one was wrong.</p>
+            <p class="links"><a href="https://github.com/Tajaddin/fake-news-detector-ml" rel="noopener">github.com/Tajaddin/fake-news-detector-ml</a></p></div>
+          </div>
+        </details>
+
+        <details class="case reveal" id="case-webhook">
+          <summary>
+            <span class="tag">Distributed systems · reliability</span>
+            <h3>At-least-once webhook delivery</h3>
+            <p class="outcome"><b>99.92% eventual delivery</b> under 30% injected transient failures, with nothing left stuck, in a deterministic simulation</p>
+            <span class="chev" aria-hidden="true">&#8964;</span>
+          </summary>
+          <div class="case-body">
+            <div><h4>Challenge</h4><p>Deliver webhooks at least once with bounded retries, no duplicate sends, signed payloads and a dead-letter queue for endpoints that never recover, and prove the guarantee instead of asserting it in a README.</p></div>
+            <div><h4>Architecture</h4><p>A Hono API with a background drain loop over an in-memory delivery queue keyed by idempotency key. A worker state machine moves each delivery from pending to delivered, back to pending with exponential backoff and full jitter, or to dead after the attempt budget. Payloads carry a Stripe-style <code>t=,v1=</code> HMAC-SHA256 signature verified in constant time with a replay window. The clock and the random source are injectable.</p></div>
+            <div><h4>Solution</h4><p>A <code>VirtualClock</code> makes backoff waits instant, so the full retry and dead-letter behaviour runs in milliseconds. The fault-injection benchmark enqueues 20,000 deliveries against a fake transport with a 30% failure rate per attempt and 2% permanently dead endpoints, then drains to completion under the default six-attempt policy.</p></div>
+            <div><h4>Implementation</h4><p>TypeScript in strict mode with <code>noUncheckedIndexedAccess</code>, Vitest (21 tests), Docker and GitHub Actions.</p></div>
+            <div class="full"><h4>Verified outcome</h4><p><b>99.92% of deliverable messages delivered</b>: 19,551 delivered, 449 dead-lettered (434 permanently down plus 15 that exhausted retries), 0 stuck pending.<span class="label rerun">re-run</span> This is an in-process simulation with a seeded random generator, a virtual clock and no network.<span class="label sim">simulated</span> The dispatch rate it prints (about 21,000/s in the README, 58,000/s on this machine) measures the loop, not HTTP delivery, so it is not quoted as throughput.</p>
+            <p class="links"><a href="https://github.com/Tajaddin/webhook-delivery" rel="noopener">github.com/Tajaddin/webhook-delivery</a></p></div>
+          </div>
+        </details>
+
+        <details class="case reveal" id="case-cuda">
+          <summary>
+            <span class="tag">GPU computing · correctness</span>
+            <h3>GPU index nested-loop join with a B+ tree</h3>
+            <p class="outcome"><b>Join kernel 4.4x faster</b> than a GPU hash-join kernel, after fixing a bug that silently dropped 1.5% of matches</p>
+            <span class="chev" aria-hidden="true">&#8964;</span>
+          </summary>
+          <div class="case-body">
+            <div><h4>Challenge</h4><p>Join two tables of up to 10 million rows on the GPU with an index: one thread per outer-table tuple walks a B+ tree over the inner table, with results compacted into one contiguous array.</p></div>
+            <div><h4>Architecture</h4><p>The B+ tree is bulk-loaded on the host and copied to the device with node layouts aligned to warp boundaries. The probe kernel writes matches into per-block buffers that a prefix-sum pass compacts. A CPU reference join checks match counts, and a GPU hash join (build and probe kernels) is the performance baseline.</p></div>
+            <div><h4>Solution</h4><p>On 2026-10-16 the correctness test showed the GPU join returning 49,227 matches where the CPU reference returned 50,000. The separator keys were wrong in trees of height three or more, so some probes descended into the wrong subtree. With the fix the counts match on every selectivity level.</p></div>
+            <div><h4>Implementation</h4><p>CUDA C++ built for sm_60 through sm_86, with a four-test driver (correctness, performance, scalability from 100K to 10M rows, selectivity from 10% to 100% overlap) and Nsight profiling targets.</p></div>
+            <div class="full"><h4>Verified outcome</h4><p><b>Probe kernel 0.54 ms versus 2.34 ms for the hash-join kernel</b> at 1M x 1M rows and 50% overlap on an RTX 4060.<span class="label rerun">re-run</span> End to end the hash join still wins by about 20x at 10M rows, because the tree is built on the CPU while the hash table is built on the GPU; the index join only pays off when one index is probed many times. Earlier claims of a 4.2x speed-up over the CPU and of near-peak memory bandwidth had no measurement behind them and were removed.</p>
+            <p class="links"><a href="https://github.com/Tajaddin/cuda-inlj" rel="noopener">github.com/Tajaddin/cuda-inlj</a></p></div>
+          </div>
+        </details>
+
+      </div>
+      <p class="legend reveal">Labels: <span class="label rerun">re-run</span> reproduced on my machine on 2026-10-16 · <span class="label live">live result file</span> needs a paid API key, the committed result file matches the claim · <span class="label sim">simulated</span> deterministic in-process benchmark, no network.</p>
+    </div>
+  </section>
+
+  <section id="experience" style="border-top:1px solid var(--line)">
     <div class="wrap">
       <div class="sec-head reveal">
         <h2>Experience</h2>
         <p>Remote and part-time, alongside full-time study at USF.</p>
       </div>
       <div class="timeline">
-        <div class="job reveal" style="background:var(--card)">
+        <div class="job reveal">
           <p class="when"><b>SƏBA ASC</b>Jun 2023 – present<br>Baku, Azerbaijan · remote · part-time</p>
           <div>
             <h3>Machine Learning Engineer</h3>
@@ -272,7 +440,7 @@
             </ul>
           </div>
         </div>
-        <div class="job reveal" style="background:var(--card)">
+        <div class="job reveal">
           <p class="when"><b>AzeriMed LLC</b>Sep 2021 – May 2023<br>Baku, Azerbaijan · remote · part-time</p>
           <div>
             <h3>Data Analyst &amp; Software Developer</h3>
@@ -283,16 +451,28 @@
             </ul>
           </div>
         </div>
-        <div class="job reveal" style="background:var(--card)">
-          <p class="when"><b>University of South Florida</b>2021 – 2027<br>Tampa, FL</p>
-          <div>
-            <h3>M.S. Computer Science, Data Science track (May 2027) · B.S. Computer Science (2025)</h3>
-            <ul>
-              <li>Reproduced the ACL 2024 "Learning to Edit" paper on LLaMA2-Chat-7B (ROME, LTE-LoRA, ICE) and documented three discrepancies from the published results.</li>
-              <li>Coursework projects in GPU computing (CUDA), systems programming (C, pthreads) and offline reinforcement learning.</li>
-            </ul>
-          </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="education" style="background:var(--bg-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <h2>Education</h2>
+        <p>University of South Florida, Tampa, FL.</p>
+      </div>
+      <div class="edu">
+        <div class="deg reveal">
+          <p class="when">Aug 2025 – May 2027 (expected)</p>
+          <h3>Master of Science in Computer Science, Data Science track</h3>
+          <p>In progress. Graduate coursework in deep learning, knowledge editing for LLMs and massively parallel systems.</p>
         </div>
+        <div class="deg reveal">
+          <p class="when">Aug 2021 – May 2025</p>
+          <h3>Bachelor of Science in Computer Science</h3>
+          <p>Completed May 2025, alongside remote part-time work since September 2021.</p>
+        </div>
+        <p class="note reveal">Course projects on GitHub: a reproduction of the ACL 2024 "Learning to Edit" paper on LLaMA2-Chat-7B (ROME, LTE-LoRA, ICE) with a 12-page report documenting three discrepancies from the published results (<a href="https://github.com/Tajaddin/llm-knowledge-editing" rel="noopener">llm-knowledge-editing</a>), the <a href="#case-cuda">CUDA B+ tree join</a>, systems programming in C with pthreads, and offline reinforcement learning.</p>
       </div>
     </div>
   </section>
@@ -319,17 +499,22 @@
         <a class="btn primary" href="mailto:gafarovtajaddin@gmail.com">gafarovtajaddin@gmail.com</a>
         <a class="btn" href="https://www.linkedin.com/in/tajaddin-gafarov" rel="noopener">LinkedIn</a>
         <a class="btn" href="https://github.com/Tajaddin" rel="noopener">GitHub</a>
+        <a class="btn" href="Tajaddin_Gafarov_Resume.pdf" download="Tajaddin_Gafarov_Resume.pdf">Resume (PDF)</a>
       </div>
     </div>
   </section>
 </main>
 
-<footer>© 2026 Tajaddin Gafarov · Tampa, FL</footer>
+<footer>© 2026 Tajaddin Gafarov · Tampa, FL · one static HTML file, no framework, no tracking · <a href="https://github.com/Tajaddin/Tajaddin.github.io" rel="noopener">source</a></footer>
 
 <script>
 // Sticky-nav border once the page scrolls.
 const nav = document.getElementById('nav');
 addEventListener('scroll', () => nav.classList.toggle('scrolled', scrollY > 8), { passive: true });
+
+// Open a case study when it is linked to by its id (from a card, the nav or a shared URL).
+const openCase = () => { const el = document.querySelector('details.case:target'); if (el) el.open = true; };
+openCase(); addEventListener('hashchange', openCase);
 
 // Reveal sections as they enter the viewport; everything shows within 1.2 s regardless.
 document.documentElement.classList.add('js');
@@ -358,7 +543,8 @@ if ('IntersectionObserver' in window) {
     w = c.clientWidth; h = c.clientHeight;
     c.width = w * dpr; c.height = h * dpr;
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    const n = Math.round(Math.min(70, Math.max(28, (w * h) / 16000)));
+    // Fewer nodes on small screens: the edge pass is O(n²) per frame and phones are CPU-bound.
+    const n = Math.round(Math.min(70, Math.max(w < 700 ? 18 : 28, (w * h) / 16000)));
     nodes = Array.from({ length: n }, () => ({
       x: Math.random() * w, y: Math.random() * h,
       vx: (Math.random() - .5) * .18, vy: (Math.random() - .5) * .18,
