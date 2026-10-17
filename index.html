@@ -271,7 +271,7 @@
           <h3><a href="https://github.com/Tajaddin/code-fix-agent" rel="noopener">Autonomous bug-fix agent</a></h3>
           <p>Reproduces, patches and verifies Python bugs in a pytest-driven loop, with an isolated workspace per attempt.</p>
           <p class="result"><b>12/12 bugs fixed</b> on Claude Haiku 4.5 · 3.58 iterations per bug · $0.10 total</p>
-          <div class="stack"><span>Python</span><span>Anthropic Agent SDK</span><span>pytest</span></div>
+          <div class="stack"><span>Python</span><span>Anthropic API</span><span>pytest</span></div>
           <p class="cta-row"><a href="#case-agent">Read the case study</a></p>
         </article>
         <article class="card reveal">
@@ -341,7 +341,7 @@
           </summary>
           <div class="case-body">
             <div><h4>Challenge</h4><p>Get an LLM to fix real Python bugs with evidence rather than confidence: the fix has to pass the repository's own pytest, within a bounded number of iterations and tokens, and the agent must not be able to edit the tests.</p></div>
-            <div><h4>Architecture</h4><p>A tool loop on the Anthropic Agent SDK with five tools: <code>list_dir</code>, <code>read_file</code>, <code>edit_file</code> (a <code>str_replace</code> that refuses ambiguous matches), <code>search_code</code> and <code>run_tests</code>. Each attempt runs in an isolated temporary workspace. A <code>MockLLM</code> returns the same <code>(content, stop_reason, usage)</code> shape as the real client, so the whole pipeline is testable without an API key.</p></div>
+            <div><h4>Architecture</h4><p>A tool loop on the Anthropic Messages API with five tools: <code>list_dir</code>, <code>read_file</code>, <code>edit_file</code> (a <code>str_replace</code> that refuses ambiguous matches), <code>search_code</code> and <code>run_tests</code>. Each attempt runs in an isolated temporary workspace. A <code>MockLLM</code> returns the same <code>(content, stop_reason, usage)</code> shape as the real client, so the whole pipeline is testable without an API key.</p></div>
             <div><h4>Solution</h4><p>The agent reads, edits and runs the tests; it stops at the first PASS or when the iteration budget runs out. The test file is held back from edits by instruction and the harness records every tool call, token and dollar per bug.</p></div>
             <div><h4>Implementation</h4><p>Python. Twelve hand-built bugs (off-by-one, mutable default argument, shallow copy, inverted condition and so on), each with three or four assertions. The benchmark writes a JSON record per bug; CI runs the mock sweep on every push. 22 tests.</p></div>
             <div class="full"><h4>Verified outcome</h4><p><b>Live Claude Haiku 4.5: 12/12 fixed, 3.58 LLM rounds and 5.58 tool calls per bug, $0.10 total</b> (77,457 tokens), from the committed benchmark file of 2026-05-20.<span class="label live">live result file</span> The mock pipeline was re-run on 2026-10-16: 12/12.<span class="label rerun">re-run</span></p>
@@ -481,7 +481,7 @@
     <div class="wrap">
       <div class="sec-head reveal"><h2>Skills</h2></div>
       <div class="skills">
-        <div class="skill reveal"><h3>AI and ML</h3><p>LLM agents, RAG, evaluation and LLM-as-judge, Anthropic Agent SDK, LangChain, LangGraph, MCP, PEFT/LoRA, PyTorch, Hugging Face, scikit-learn, XGBoost, MLflow</p></div>
+        <div class="skill reveal"><h3>AI and ML</h3><p>LLM agents, RAG, evaluation and LLM-as-judge, Anthropic API, LangChain, LangGraph, MCP, PEFT/LoRA, PyTorch, Hugging Face, scikit-learn, XGBoost, MLflow</p></div>
         <div class="skill reveal"><h3>Data</h3><p>Python, SQL, Spark / PySpark, Airflow, Kafka, ClickHouse, DuckDB, PostgreSQL, MongoDB, ETL/ELT, streaming</p></div>
         <div class="skill reveal"><h3>Backend and cloud</h3><p>FastAPI, Spring Boot, ASP.NET Core, Go and gRPC, REST, Docker, Kubernetes, Terraform, AWS, GCP, CI/CD</p></div>
         <div class="skill reveal"><h3>Languages</h3><p>Python, SQL, Go, TypeScript, Java, Kotlin, C#, C/C++, JavaScript, Bash</p></div>
