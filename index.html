@@ -269,7 +269,7 @@
         <article class="card reveal">
           <span class="tag">LLM agents · evaluation</span>
           <h3><a href="https://github.com/Tajaddin/code-fix-agent" rel="noopener">Autonomous bug-fix agent</a></h3>
-          <p>Reproduces, patches and verifies Python bugs in a pytest-driven loop, with an isolated workspace per attempt.</p>
+          <p>Reproduces, patches and verifies Python bugs in a pytest-driven loop, with a temp workspace per attempt and every tool path confined to it.</p>
           <p class="result"><b>12/12 bugs fixed</b> on Claude Haiku 4.5 · 3.58 iterations per bug · $0.10 total</p>
           <div class="stack"><span>Python</span><span>Anthropic API</span><span>pytest</span></div>
           <p class="cta-row"><a href="#case-agent">Read the case study</a></p>
@@ -285,14 +285,14 @@
           <span class="tag">RAG safety · healthcare</span>
           <h3><a href="https://github.com/Tajaddin/medrag-ground" rel="noopener">Grounded RAG over drug labels</a></h3>
           <p>Audit-logged retrieval over OpenFDA labels with citation grounding, PII detection and adversarial-safety checks.</p>
-          <p class="result"><b>100% refusal</b> on unanswerable, PII and adversarial prompts · 90% citation rate · 0 hallucinated drug names</p>
+          <p class="result"><b>100% refusal</b> on unanswerable and PII prompts · 100% safe (refused or cited) on adversarial prompts · 90% citation rate · 0 of 77 answers name a drug their sources don't mention (20-name check)</p>
           <div class="stack"><span>Python</span><span>RAG</span><span>evaluation</span></div>
         </article>
         <article class="card reveal">
           <span class="tag">Tooling for Claude</span>
           <h3><a href="https://github.com/Tajaddin/mcp-server-toolkit" rel="noopener">MCP server toolkit</a></h3>
           <p>Framework for Model Context Protocol servers, with filesystem, GitHub-issues and SQLite servers and an in-memory test harness.</p>
-          <p class="result"><b>p99 8.2 ms</b> tool round trip, 6x under budget</p>
+          <p class="result"><b>p99 8.21–8.69 ms</b> tool round trip, 6x under budget</p>
           <div class="stack"><span>Python</span><span>MCP</span></div>
         </article>
         <article class="card reveal">
@@ -307,15 +307,15 @@
           <span class="tag">Backend · Go</span>
           <h3><a href="https://github.com/Tajaddin/go-grpc-kvstore" rel="noopener">gRPC key-value store</a></h3>
           <p>In-memory store over gRPC and REST with TTL, streaming Watch and sharded concurrency; race-detector tested.</p>
-          <p class="result"><b>~51,800 ops/sec</b> at p99 2.84 ms on the Get path</p>
+          <p class="result"><b>~51,800 ops/sec</b> at p99 2.84 ms on the Get path (measured before sharding)</p>
           <div class="stack"><span>Go</span><span>gRPC</span><span>Docker</span></div>
         </article>
         <article class="card story reveal">
           <span class="tag">The result that said no</span>
           <h3><a href="https://github.com/Tajaddin/fake-news-detector-ml" rel="noopener">Fake-news detection: a leakage audit</a></h3>
-          <p>A baseline hit 99–100% accuracy, which is usually a sign something is wrong. A six-step audit traced it to publisher and stylistic leakage in the data, so I reported the honest number on a leakage-resistant held-out set instead.</p>
+          <p>A baseline hit 100% accuracy, which is usually a sign something is wrong. The audit traced it to a synthetic sample set whose test sentences repeat training sentences, so I reported the honest number on a real held-out set instead.</p>
           <p class="result"><b>62.1% accuracy, 0.676 ROC-AUC</b> on 1,267 held-out LIAR statements, reproducible from a fresh clone</p>
-          <div class="stack"><span>scikit-learn</span><span>Hugging Face</span><span>SHAP</span><span>LIME</span><span>MLflow</span></div>
+          <div class="stack"><span>scikit-learn</span><span>Hugging Face</span><span>LIME</span></div>
           <p class="cta-row"><a href="#case-fakenews">Read the case study</a></p>
         </article>
       </div>
@@ -341,10 +341,10 @@
           </summary>
           <div class="case-body">
             <div><h4>Challenge</h4><p>Get an LLM to fix real Python bugs with evidence rather than confidence: the fix has to pass the repository's own pytest, within a bounded number of iterations and tokens, and the agent must not be able to edit the tests.</p></div>
-            <div><h4>Architecture</h4><p>A tool loop on the Anthropic Messages API with five tools: <code>list_dir</code>, <code>read_file</code>, <code>edit_file</code> (a <code>str_replace</code> that refuses ambiguous matches), <code>search_code</code> and <code>run_tests</code>. Each attempt runs in an isolated temporary workspace. A <code>MockLLM</code> returns the same <code>(content, stop_reason, usage)</code> shape as the real client, so the whole pipeline is testable without an API key.</p></div>
-            <div><h4>Solution</h4><p>The agent reads, edits and runs the tests; it stops at the first PASS or when the iteration budget runs out. The test file is held back from edits by instruction and the harness records every tool call, token and dollar per bug.</p></div>
-            <div><h4>Implementation</h4><p>Python. Twelve hand-built bugs (off-by-one, mutable default argument, shallow copy, inverted condition and so on), each with three or four assertions. The benchmark writes a JSON record per bug; CI runs the mock sweep on every push. 22 tests.</p></div>
-            <div class="full"><h4>Verified outcome</h4><p><b>Live Claude Haiku 4.5: 12/12 fixed, 3.58 LLM rounds and 5.58 tool calls per bug, $0.10 total</b> (77,457 tokens), from the committed benchmark file of 2026-05-20.<span class="label live">live result file</span> The mock pipeline was re-run on 2026-10-16: 12/12.<span class="label rerun">re-run</span></p>
+            <div><h4>Architecture</h4><p>A tool loop on the Anthropic Messages API with five tools: <code>list_dir</code>, <code>read_file</code>, <code>edit_file</code> (a <code>str_replace</code> that refuses ambiguous matches), <code>search_code</code> and <code>run_tests</code>. Each attempt runs in its own temporary workspace, and every tool path is confined to it. A <code>MockLLM</code> returns the same <code>(content, stop_reason, usage)</code> shape as the real client, so the whole pipeline is testable without an API key.</p></div>
+            <div><h4>Solution</h4><p>The agent reads, edits and runs the tests; it stops at the first PASS or when the iteration budget runs out. The test file is held back from edits by instruction and the harness records every tool call and token per bug and the cost of the sweep.</p></div>
+            <div><h4>Implementation</h4><p>Python. Twelve hand-built bugs (off-by-one, mutable default argument, shallow copy, inverted condition and so on), each with three or four tests. The benchmark writes a JSON record per bug; CI runs the mock sweep on every push to main. 66 tests.</p></div>
+            <div class="full"><h4>Verified outcome</h4><p><b>Live Claude Haiku 4.5: 12/12 fixed, 3.58 LLM rounds and 5.58 tool calls per bug, $0.10 total</b> (77,457 tokens), from the committed benchmark file of 2026-05-20, on the earlier harness: the pass verdict was the agent's own pytest run, before the current scoring against a clean copy of the original tests.<span class="label live">live result file</span> The mock pipeline was re-run on 2026-10-16: 12/12.<span class="label rerun">re-run</span></p>
             <p class="links"><a href="https://github.com/Tajaddin/code-fix-agent" rel="noopener">github.com/Tajaddin/code-fix-agent</a></p></div>
           </div>
         </details>
@@ -360,7 +360,7 @@
             <div><h4>Challenge</h4><p>Events arrive out of order across partitions. The first version used one global watermark and, at zero injected lateness, flagged 7,104 of 10,000 in-window events as late. The unit tests passed because they were single-partition.</p></div>
             <div><h4>Architecture</h4><p>A message bus (in-memory, with a Kafka adapter) drained round-robin per partition, feeding a tumbling-window aggregator and a DuckDB sink with separate <code>windows</code> and <code>late_events</code> tables. A SQLite checkpointer stores per-partition offsets and the watermark floor so a restart never double-emits a closed window.</p></div>
             <div><h4>Solution</h4><p>A <code>WatermarkTracker</code> keeps the maximum event time per partition; the effective watermark is the minimum across partitions, so a slow partition holds the clock back instead of having its events discarded. Genuinely late events go to a side output rather than being dropped.</p></div>
-            <div><h4>Implementation</h4><p>Python with DuckDB and SQLite. Writes run in explicit transactions per batch, which measured about three times faster than DuckDB's per-statement autocommit on this workload. 25 tests.</p></div>
+            <div><h4>Implementation</h4><p>Python with DuckDB and SQLite. Writes run in explicit transactions per batch, which measured about three times faster than DuckDB's per-statement autocommit on this workload. 37 tests.</p></div>
             <div class="full"><h4>Verified outcome</h4><p>50,000 events, 4 partitions, 50 keys: <b>0% false-late</b> against 71% for the naive version, and 2,550 windows emitted, which matches the ground truth.<span class="label rerun">re-run</span> Throughput is machine-dependent: 4,566 events/s in the README run, 7,450/s re-run on Linux, and about 480/s on a Windows PC whose antivirus slows file I/O, so the headline is the correctness number, not the rate.</p>
             <p class="links"><a href="https://github.com/Tajaddin/streaming-etl-pipeline" rel="noopener">github.com/Tajaddin/streaming-etl-pipeline</a></p></div>
           </div>
@@ -370,13 +370,13 @@
           <summary>
             <span class="tag">Machine learning · data quality</span>
             <h3>Fake-news detection: a leakage audit</h3>
-            <p class="outcome"><b>62.1% accuracy, 0.676 ROC-AUC</b> on the held-out LIAR test set, replacing a 99 to 100% number that came from leakage</p>
+            <p class="outcome"><b>62.1% accuracy, 0.676 ROC-AUC</b> on the held-out LIAR test set, replacing a 100% number that came from test sentences repeated in training</p>
             <span class="chev" aria-hidden="true">&#8964;</span>
           </summary>
           <div class="case-body">
-            <div><h4>Challenge</h4><p>On the usual fake-vs-real news corpus, plain logistic regression scored 99 to 100% on the test set out of the box. A result that good on a hard task is normally a sign the data is leaking the label.</p></div>
-            <div><h4>Architecture</h4><p>A six-step audit script: dataset size check, train/test text overlap, label-leaking metadata (publisher names, datetime artifacts, URL fragments), a random-label baseline, the train-versus-test gap, and seed sensitivity. The pipeline itself is TF-IDF (1 to 2-grams) plus logistic regression, with a Hugging Face transformer baseline, SHAP and LIME explanations and MLflow tracking.</p></div>
-            <div><h4>Solution</h4><p>The audit traced the accuracy to publisher and stylistic leakage, so the reported number moved to LIAR, a short-statement dataset, using the statement and its context only and no speaker identity, which would otherwise act as a label.</p></div>
+            <div><h4>Challenge</h4><p>On the project's synthetic sample set, plain logistic regression scored 100% on the test set out of the box. A result that good on a hard task is normally a sign the data is leaking the label.</p></div>
+            <div><h4>Architecture</h4><p>A seven-check audit script: dataset size, train/test text overlap (verbatim, and ignoring case, digits and punctuation), class-exclusive vocabularies, repeated templates, a permutation baseline (the model refit on 50 permutations of the training labels), the train-versus-test gap with the real labels, and class keywords. The pipeline itself is TF-IDF (1 to 2-grams) plus logistic regression, with a Hugging Face transformer baseline and LIME explanations.</p></div>
+            <div><h4>Solution</h4><p>The 100% came from the synthetic sample set, where every test sentence also appears in training, so the reported number moved to LIAR, a short-statement dataset, using the statement and its context only and no speaker identity, which would otherwise act as a label.</p></div>
             <div><h4>Implementation</h4><p>Python and scikit-learn. CI downloads LIAR, builds the splits and re-evaluates on every push. On 2026-10-16 a 25-test suite was added, including a regression test on the reported metric; it immediately found a bug in the feature extractor (it crashed on any frame without a title column), which is fixed.</p></div>
             <div class="full"><h4>Verified outcome</h4><p><b>62.1% accuracy, 0.676 ROC-AUC on 1,267 held-out LIAR statements</b>, reproduced exactly from a fresh clone on 2026-10-16.<span class="label rerun">re-run</span> It is deliberately an unimpressive number; the point of the project is knowing why the impressive one was wrong.</p>
             <p class="links"><a href="https://github.com/Tajaddin/fake-news-detector-ml" rel="noopener">github.com/Tajaddin/fake-news-detector-ml</a></p></div>
@@ -391,11 +391,11 @@
             <span class="chev" aria-hidden="true">&#8964;</span>
           </summary>
           <div class="case-body">
-            <div><h4>Challenge</h4><p>Deliver webhooks at least once with bounded retries, no duplicate sends, signed payloads and a dead-letter queue for endpoints that never recover, and prove the guarantee instead of asserting it in a README.</p></div>
-            <div><h4>Architecture</h4><p>A Hono API with a background drain loop over an in-memory delivery queue keyed by idempotency key. A worker state machine moves each delivery from pending to delivered, back to pending with exponential backoff and full jitter, or to dead after the attempt budget. Payloads carry a Stripe-style <code>t=,v1=</code> HMAC-SHA256 signature verified in constant time with a replay window. The clock and the random source are injectable.</p></div>
+            <div><h4>Challenge</h4><p>Deliver webhooks at least once with bounded retries, idempotent enqueues, signed payloads and a dead-letter queue for endpoints that never recover, and prove the guarantee instead of asserting it in a README.</p></div>
+            <div><h4>Architecture</h4><p>A Hono API with a background drain loop over an in-memory delivery queue keyed by endpoint and idempotency key. A worker state machine moves each delivery from pending to delivered, back to pending with exponential backoff and full jitter, or to dead after the attempt budget. Payloads carry a Stripe-style <code>t=,v1=</code> HMAC-SHA256 signature verified in constant time with a replay window. The clock and the random source are injectable.</p></div>
             <div><h4>Solution</h4><p>A <code>VirtualClock</code> makes backoff waits instant, so the full retry and dead-letter behaviour runs in milliseconds. The fault-injection benchmark enqueues 20,000 deliveries against a fake transport with a 30% failure rate per attempt and 2% permanently dead endpoints, then drains to completion under the default six-attempt policy.</p></div>
-            <div><h4>Implementation</h4><p>TypeScript in strict mode with <code>noUncheckedIndexedAccess</code>, Vitest (21 tests), Docker and GitHub Actions.</p></div>
-            <div class="full"><h4>Verified outcome</h4><p><b>99.92% of deliverable messages delivered</b>: 19,551 delivered, 449 dead-lettered (434 permanently down plus 15 that exhausted retries), 0 stuck pending.<span class="label rerun">re-run</span> This is an in-process simulation with a seeded random generator, a virtual clock and no network.<span class="label sim">simulated</span> The dispatch rate it prints (about 21,000/s in the README, 58,000/s on this machine) measures the loop, not HTTP delivery, so it is not quoted as throughput.</p>
+            <div><h4>Implementation</h4><p>TypeScript in strict mode with <code>noUncheckedIndexedAccess</code>, Vitest (91 tests), Docker and GitHub Actions.</p></div>
+            <div class="full"><h4>Verified outcome</h4><p><b>99.92% of deliverable messages delivered</b>: 19,551 delivered, 449 dead-lettered (434 permanently down plus 15 that exhausted retries), 0 stuck pending.<span class="label rerun">re-run</span> This is an in-process simulation with a seeded random generator, a virtual clock and no network.<span class="label sim">simulated</span> The dispatch rate it prints (35,759/s in the README, the median of 5 runs) measures the loop, not HTTP delivery, so it is not quoted as throughput.</p>
             <p class="links"><a href="https://github.com/Tajaddin/webhook-delivery" rel="noopener">github.com/Tajaddin/webhook-delivery</a></p></div>
           </div>
         </details>
@@ -404,15 +404,15 @@
           <summary>
             <span class="tag">GPU computing · correctness</span>
             <h3>GPU index nested-loop join with a B+ tree</h3>
-            <p class="outcome"><b>Join kernel 4.4x faster</b> than a GPU hash-join kernel, after fixing a bug that silently dropped 1.5% of matches</p>
+            <p class="outcome"><b>Fixed a bug that silently dropped 1.5% of matches</b>, then retracted a 4.4x kernel speed-up that did not survive a warm-up and median timing</p>
             <span class="chev" aria-hidden="true">&#8964;</span>
           </summary>
           <div class="case-body">
-            <div><h4>Challenge</h4><p>Join two tables of up to 10 million rows on the GPU with an index: one thread per outer-table tuple walks a B+ tree over the inner table, with results compacted into one contiguous array.</p></div>
-            <div><h4>Architecture</h4><p>The B+ tree is bulk-loaded on the host and copied to the device with node layouts aligned to warp boundaries. The probe kernel writes matches into per-block buffers that a prefix-sum pass compacts. A CPU reference join checks match counts, and a GPU hash join (build and probe kernels) is the performance baseline.</p></div>
-            <div><h4>Solution</h4><p>On 2026-10-16 the correctness test showed the GPU join returning 49,227 matches where the CPU reference returned 50,000. The separator keys were wrong in trees of height three or more, so some probes descended into the wrong subtree. With the fix the counts match on every selectivity level.</p></div>
-            <div><h4>Implementation</h4><p>CUDA C++ built for sm_60 through sm_86, with a four-test driver (correctness, performance, scalability from 100K to 10M rows, selectivity from 10% to 100% overlap) and Nsight profiling targets.</p></div>
-            <div class="full"><h4>Verified outcome</h4><p><b>Probe kernel 0.54 ms versus 2.34 ms for the hash-join kernel</b> at 1M x 1M rows and 50% overlap on an RTX 4060.<span class="label rerun">re-run</span> End to end the hash join still wins by about 20x at 10M rows, because the tree is built on the CPU while the hash table is built on the GPU; the index join only pays off when one index is probed many times. Earlier claims of a 4.2x speed-up over the CPU and of near-peak memory bandwidth had no measurement behind them and were removed.</p>
+            <div><h4>Challenge</h4><p>Join two tables of up to 10 million rows on the GPU with an index: one thread per outer-table tuple walks a B+ tree over the inner table, with matches written to one contiguous result array.</p></div>
+            <div><h4>Architecture</h4><p>The B+ tree (order 64, 520-byte nodes) is bulk-loaded on the host and copied to the device as is. Each probe binary-searches one node per level and claims the next slot of a single result array with an atomicAdd. A CPU reference join checks every (r_id, s_id) pair, and a GPU hash join (build and probe kernels) is the performance baseline.</p></div>
+            <div><h4>Solution</h4><p>On 2026-10-16 the correctness test showed the GPU join returning 49,227 matches where the CPU reference returned 50,000. The separator keys were wrong in trees of height three or more, so some probes descended into the wrong subtree. With the fix every test, including the selectivity sweep, returns exactly the CPU reference pairs.</p></div>
+            <div><h4>Implementation</h4><p>CUDA C++ built for sm_75 through sm_86 plus PTX (sm_60 and sm_70 too on a pre-CUDA-13 nvcc), with a four-test driver (correctness, performance, scalability from 100K to 10M rows, selectivity from 10% to 100% overlap) and Nsight profiling targets.</p></div>
+            <div class="full"><h4>Verified outcome</h4><p><b>Probe kernel 0.532 ms versus 0.167 ms for the hash-join kernel</b> at 1M x 1M rows and 50% overlap on an RTX 4060, median of 11 runs after a warm-up; the earlier 4.4x claim in the other direction came from a cold single run and test data that sent every miss down one cached path, and is retracted.<span class="label rerun">re-run</span> End to end the hash join wins by about 21x at 10M rows, because the tree is built on the CPU while the hash table is built on the GPU; reusing a prebuilt index removes the build cost but not the per-probe gap. Earlier claims of a 4.2x speed-up over the CPU and of near-peak memory bandwidth had no measurement behind them and were removed.</p>
             <p class="links"><a href="https://github.com/Tajaddin/cuda-inlj" rel="noopener">github.com/Tajaddin/cuda-inlj</a></p></div>
           </div>
         </details>
